@@ -26,7 +26,7 @@ function AuthForm() {
     e.preventDefault();
     setMessage('');
 
-    const url = isLogin ? 'http://localhost:3001/login' : 'http://localhost:3001/signup';
+    const url = isLogin ? 'https://savoryshare.onrender.com/login' : 'https://savoryshare.onrender.com/signup';
 
     try {
       const response = await axios.post(url, formData);
@@ -39,7 +39,7 @@ function AuthForm() {
         } else {
           alert('Registration successful! Logging you in...');
           try {
-            const loginResponse = await axios.post('http://localhost:3001/login', {
+            const loginResponse = await axios.post('https://savoryshare.onrender.com/login', {
               username: formData.username,
               email: formData.email,
               password: formData.password

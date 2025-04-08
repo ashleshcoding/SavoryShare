@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import '../styles.css'; // Import the CSS file
+import '../styles.css'; 
 
 const ViewRecipe = () => {
   const { id } = useParams();
@@ -12,7 +12,7 @@ const ViewRecipe = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/recipes/${id}`);
+        const response = await axios.get(`https://savoryshare.onrender.com/recipes/${id}`);
         setRecipe(response.data.recipe);
         setLoading(false);
       } catch (error) {
@@ -32,7 +32,6 @@ const ViewRecipe = () => {
     <div className="view-recipe-container">
       <h2 className="view-recipe-header">{recipe.title}</h2>
 
-      {/* Image */}
       <div className="view-recipe-image-container">
         {recipe.image && !imageError ? (
           <img

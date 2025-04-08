@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 const Favourites = () => {
   const [favouriteRecipes, setFavouriteRecipes] = useState([]);
 
-  // Fetch favourite recipes
+  
   const fetchFavouriteRecipes = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await axios.get(`http://localhost:3001/favourites/${userId}`);
+      const response = await axios.get(`https://savoryshare.onrender.com/favourites/${userId}`);
       setFavouriteRecipes(response.data.favourites); // ✅ Fixed: using correct key
     } catch (error) {
       console.error("Error fetching favourite recipes:", error);
@@ -24,7 +24,7 @@ const Favourites = () => {
     <div className="container mt-4">
       <h1 className="mb-4">Your Favourites</h1>
 
-      {/* Favourite Recipe Cards */}
+      
       <div className="row">
         {Array.isArray(favouriteRecipes) && favouriteRecipes.length > 0 ? (
           favouriteRecipes.map((recipe) => (

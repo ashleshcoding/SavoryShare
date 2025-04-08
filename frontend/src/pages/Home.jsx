@@ -10,12 +10,12 @@ const Home = () => {
     <div>
       <div className="container mt-5">
         <div className="row align-items-center flex-column-reverse flex-md-row">
-          {/* Left - Carousel */}
+          
           <div className="col-12 col-md-6 mb-4 mb-md-0">
             <Carousel />
           </div>
           
-          {/* Right - Login/Signup Form */}
+
           <div className="col-12 col-md-6">
             <AuthForm />
           </div>

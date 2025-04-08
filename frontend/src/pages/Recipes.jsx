@@ -9,10 +9,9 @@ const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
   const [favourites, setFavourites] = useState([]);
 
-  // Fetch all recipes
   const fetchRecipes = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/recipes", {
+      const response = await axios.get("https://savoryshare.onrender.com/recipes", {
         params: {
           category: mealType,
           type: foodType,
@@ -25,16 +24,16 @@ const Recipes = () => {
     }
   };
 
-  // Fetch favourites from backend
+  
   const fetchFavourites = async () => {
     try {
-      const userId = localStorage.getItem("userId"); // Ensure userId is stored at login
+      const userId = localStorage.getItem("userId"); 
       if (!userId) {
         console.error("User ID missing in localStorage!");
         return;
       }
 
-      const response = await axios.get(`http://localhost:3001/favourites/${userId}`);
+      const response = await axios.get(`https://savoryshare.onrender.com/favourites/${userId}`);
       setFavourites(response.data.favourites);
     } catch (error) {
       console.error("Error fetching favourites:", error);
@@ -46,7 +45,7 @@ const Recipes = () => {
     fetchFavourites();
   }, [mealType, foodType, searchTerm]);
 
-  // Add to Favourites handler
+  
   const addToFavourites = async (recipeId) => {
     try {
       const userId = localStorage.getItem("userId");
@@ -55,16 +54,16 @@ const Recipes = () => {
         return;
       }
 
-      await axios.post("http://localhost:3001/favourites/add", { userId, recipeId });
+      await axios.post("https://savoryshare.onrender.com/favourites/add", { userId, recipeId });
       alert("Added to Favourites ✅");
-      fetchFavourites(); // Refresh favourites list
+      fetchFavourites(); 
     } catch (error) {
       console.error("Error adding to favourites:", error);
       alert("Failed to add to favourites!");
     }
   };
 
-  // Check if recipe is in favourites
+  
   const isFavourite = (recipeId) => {
     return favourites.some(favId => favId.toString() === recipeId.toString());
   };
@@ -74,10 +73,10 @@ const Recipes = () => {
     <div className="container mt-4">
       <h1 className="mb-4">All Recipes</h1>
 
-      {/* Filter Section */}
+      
       <div className="card p-3 mb-4">
         <div className="row">
-          {/* Meal Type Filter */}
+          
           <div className="col-md-4 mb-2">
             <label htmlFor="mealType" className="form-label">Meal Type:</label>
             <select
@@ -94,7 +93,7 @@ const Recipes = () => {
             </select>
           </div>
 
-          {/* Food Type Filter */}
+          
           <div className="col-md-4 mb-2">
             <label htmlFor="foodType" className="form-label">Food Type:</label>
             <select
@@ -109,7 +108,7 @@ const Recipes = () => {
             </select>
           </div>
 
-          {/* Search Bar */}
+         
           <div className="col-md-4 mb-2">
             <label htmlFor="search" className="form-label">Search:</label>
             <input
@@ -123,7 +122,6 @@ const Recipes = () => {
         </div>
       </div>
 
-      {/* Recipe Cards */}
       <div className="row">
         {recipes.length > 0 ? (
           recipes.map((recipe) => (

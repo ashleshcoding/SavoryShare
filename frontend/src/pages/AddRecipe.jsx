@@ -32,10 +32,10 @@ function AddRecipe() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3001/add-recipe', recipeData);
+      const response = await axios.post('https://savoryshare.onrender.com/add-recipe', recipeData);
       if (response.data.success) {
         alert('Recipe added successfully!');
-        // Optionally, clear the form after successful submission
+       
         setRecipeData({
           title: '',
           description: '',
@@ -65,13 +65,13 @@ function AddRecipe() {
           <input type="text" className="form-control" name="title" value={recipeData.title} onChange={handleChange} placeholder="Enter recipe name" required />
         </div>
 
-        {/* Description */}
+        
         <div className="mb-3">
           <label className="form-label">Description</label>
           <textarea className="form-control" name="description" value={recipeData.description} onChange={handleChange} rows="3" placeholder="Describe your recipe" required />
         </div>
 
-        {/* Ingredients */}
+        
         <div className="mb-3">
           <label className="form-label">Ingredients</label>
           {recipeData.ingredients.map((ingredient, index) => (
@@ -80,7 +80,7 @@ function AddRecipe() {
           <button type="button" className="btn btn-secondary btn-sm" onClick={() => addField('ingredients')}>Add More Ingredients</button>
         </div>
 
-        {/* Steps */}
+        
         <div className="mb-3">
           <label className="form-label">Preparation Steps</label>
           {recipeData.steps.map((step, index) => (
@@ -89,7 +89,7 @@ function AddRecipe() {
           <button type="button" className="btn btn-secondary btn-sm" onClick={() => addField('steps')}>Add More Steps</button>
         </div>
 
-        {/* Category */}
+        
         <div className="mb-3">
           <label className="form-label">Category</label>
           <select className="form-select" name="category" value={recipeData.category} onChange={handleChange} required>
@@ -101,7 +101,7 @@ function AddRecipe() {
           </select>
         </div>
 
-        {/* Type */}
+        
         <div className="mb-3">
           <label className="form-label">Type</label>
           <select className="form-select" name="type" value={recipeData.type} onChange={handleChange} required>
@@ -111,19 +111,19 @@ function AddRecipe() {
           </select>
         </div>
 
-        {/* Duration */}
+        
         <div className="mb-3">
           <label className="form-label">Duration</label>
           <input type="text" className="form-control" name="duration" value={recipeData.duration} onChange={handleChange} placeholder="e.g., 40 mins" required />
         </div>
 
-        {/* Image URL */}
+        
         <div className="mb-3">
           <label className="form-label">Image URL</label>
           <input type="text" className="form-control" name="image" value={recipeData.image} onChange={handleChange} placeholder="Enter image URL" required />
         </div>
 
-        {/* Submit Button */}
+        
         <button type="submit" className="btn btn-primary">Submit Recipe</button>
       </form>
     </div>
