@@ -16,10 +16,11 @@ function AuthForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const saveUserToLocalStorage = (user) => {
-    localStorage.setItem('userId', user.userId);
-    localStorage.setItem('username', user.username);
-    localStorage.setItem('email', user.email);
+  const saveUserToLocalStorage = (data) => {
+    localStorage.setItem('userId', data.userId);
+    localStorage.setItem('username', data.username);
+    localStorage.setItem('email', data.email);
+    localStorage.setItem('token', data.token);
   };
 
   const handleSubmit = async (e) => {
@@ -38,6 +39,7 @@ function AuthForm() {
           navigate('/dashboard');
         } else {
           alert('Registration successful! Logging you in...');
+
           try {
             const loginResponse = await axios.post('https://savoryshare.onrender.com/login', {
               username: formData.username,

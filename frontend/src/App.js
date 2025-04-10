@@ -4,13 +4,13 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
-import ViewRecipe from "./pages/ViewRecipe"; // ✅ Import the ViewRecipe page
+import ViewRecipe from "./pages/ViewRecipe";
 import Navbar from "./component/Navbar";
+import PrivateRoute from "./component/PrivateRoute"; // ✅ import private route
 
 function App() {
   const location = useLocation();
 
-  // Define routes where you want to show the Navbar
   const showDefaultNavbar = ["/", "/about", "/contact"].includes(location.pathname);
 
   return (
@@ -23,13 +23,20 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
 
-        {/* Dashboard (Private or Authenticated routes) */}
-        <Route path="/dashboard/*" element={<Dashboard />} />
+        {/* ✅ Private Routes */}
+        <Route
+          path="/dashboard/*"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
 
-        {/* ✅ Fixed: View Recipe route */}
+        {/* ✅ Public view recipe */}
         <Route path="/viewrecipe/:id" element={<ViewRecipe />} />
 
-        {/* Optional: 404 Page Not Found */}
+        {/* 404 Page */}
         <Route path="*" element={<h2 style={{ textAlign: 'center', marginTop: '50px' }}>404 - Page Not Found</h2>} />
       </Routes>
     </>

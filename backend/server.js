@@ -1,26 +1,27 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
 import User from './models/User.js';
 import Recipe from './models/Recipe.js';
 
-dotenv.config();
-
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = 3001; // Hardcoded port
+const JWT_SECRET = "your_hardcoded_secret_key"; // Hardcoded secret key ✅
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
 // Database connection
+// Import dotenv at the top
+import dotenv from 'dotenv';
+dotenv.config();
+
+// Database connection
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("✅ Connected to MongoDB successfully"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
@@ -68,16 +69,30 @@ app.get("/", (req, res) => {
 // Signup Route
 app.post("/signup", async (req, res) => {
   const { username, email, password } = req.body;
+
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ success: false, error: "Email already registered" });
     }
 
-    const hashpassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, password: hashpassword });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-    res.json({ success: true, message: "User registered successfully", userId: newUser._id });
+
+    // Generate JWT token
+    const token = jwt.sign({ id: newUser._id, username: newUser.username }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.json({
+      success: true,
+      message: "User registered successfully",
+      userId: newUser._id,
+      token,
+      username: newUser.username,
+      email: newUser.email,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: "Error in registration" });
@@ -102,12 +117,18 @@ app.post("/login", async (req, res) => {
       return res.status(400).json({ success: false, error: "Incorrect password" });
     }
 
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
     res.json({
       success: true,
       message: `Welcome ${user.username}!`,
       userId: user._id,
+      token,
       username: user.username,
-      email: user.email
+      email: user.email,
     });
   } catch (err) {
     console.error(err);
@@ -128,7 +149,7 @@ app.post("/add-recipe", async (req, res) => {
       category,
       type,
       duration,
-      image
+      image,
     });
 
     await newRecipe.save();
@@ -171,6 +192,8 @@ app.get("/recipes/:id", async (req, res) => {
     res.status(500).json({ success: false, error: "Error fetching the recipe" });
   }
 });
+
+
 
 // Add to Favourites Route
 app.post("/favourites/add", async (req, res) => {
@@ -224,7 +247,9 @@ app.get("/favourites/:userId", async (req, res) => {
   }
 });
 
-// Start Server
+
+
+// Start server
 app.listen(PORT, () => {
-  console.log(` Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

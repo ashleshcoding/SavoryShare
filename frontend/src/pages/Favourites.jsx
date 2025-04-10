@@ -45,7 +45,7 @@ const Favourites = () => {
                     </p>
                   </div>
                   <div className="text-center">
-                    <Link to={`/view-recipe/${recipe._id}`} className="btn btn-primary mt-2">
+                    <Link to={`/viewrecipe/${recipe._id}`} className="btn btn-primary mt-2">
                       View Recipe
                     </Link>
                   </div>
