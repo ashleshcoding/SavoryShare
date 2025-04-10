@@ -218,3 +218,11 @@ body {
   background-color: #003d75;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.view-recipe-image {
+  width: 300px; 
+  height: 200px; 
+  object-fit: cover; 
+  border-radius: 8px; 
+}
+
