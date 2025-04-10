@@ -35,12 +35,11 @@ const ViewRecipe = () => {
       <div className="view-recipe-image-container">
         {recipe.image && !imageError ? (
           <img
-          src={recipe.image ? `${recipe.image}?w=375&h=230` : ''}
-          alt={recipe.title}
-          onError={() => setImageError(true)}
-          className="view-recipe-image"
-        />
-        
+            src={`${recipe.image}?w=375&h=230`}
+            alt={recipe.title}
+            onError={() => setImageError(true)}
+            className="view-recipe-image"
+          />
         ) : (
           <p className="view-recipe-image-error">Image not available</p>
         )}
@@ -49,26 +48,26 @@ const ViewRecipe = () => {
       <p className="view-recipe-description">{recipe.description}</p>
 
       <h3>Ingredients:</h3>
-      <ul className="view-recipe-list">
-        {recipe.ingredients && recipe.ingredients.length > 0 ? (
-          recipe.ingredients.map((ingredient, index) => (
+      {recipe.ingredients && recipe.ingredients.length > 0 ? (
+        <ul className="view-recipe-list">
+          {recipe.ingredients.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
-          ))
-        ) : (
-          <p>No ingredients available</p>
-        )}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <p>No ingredients available</p>
+      )}
 
       <h3>Steps:</h3>
-      <ol className="view-recipe-list">
-        {recipe.steps && recipe.steps.length > 0 ? (
-          recipe.steps.map((step, index) => (
+      {recipe.steps && recipe.steps.length > 0 ? (
+        <ol className="view-recipe-list">
+          {recipe.steps.map((step, index) => (
             <li key={index}>{step}</li>
-          ))
-        ) : (
-          <p>No preparation steps available</p>
-        )}
-      </ol>
+          ))}
+        </ol>
+      ) : (
+        <p>No preparation steps available</p>
+      )}
 
       <div className="view-recipe-meta">
         <p><strong>Category:</strong> {recipe.category}</p>
