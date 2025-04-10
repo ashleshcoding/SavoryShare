@@ -219,3 +219,12 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.view-recipe-image {
+  width: 100%;
+  max-width: 400px; /* control the maximum width */
+  height: 250px; /* fixed height */
+  object-fit: cover; /* ensures the image covers the container without distortion */
+  border-radius: 8px; /* optional: rounded corners for better look */
+  display: block;
+  margin: 0 auto; /* center the image */
+}
