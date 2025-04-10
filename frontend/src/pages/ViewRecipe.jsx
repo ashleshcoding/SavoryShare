@@ -35,7 +35,7 @@ const ViewRecipe = () => {
       <div className="view-recipe-image-container">
         {recipe.image && !imageError ? (
           <img
-          src={recipe.image ? `${recipe.image}?w=300&h=200` : ''}
+          src={recipe.image ? `${recipe.image}?w=475&h=300` : ''}
           alt={recipe.title}
           onError={() => setImageError(true)}
           className="view-recipe-image"
